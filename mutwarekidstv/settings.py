@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'core',
     'kidtv',
     'drf_yasg',
+    'django_filters',
 
 
 ]
@@ -63,7 +64,7 @@ ROOT_URLCONF = 'mutwarekidstv.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ["templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,6 +78,14 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'mutwarekidstv.wsgi.application'
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.SearchFilter',  # Add this line for search functionality
+    ],
+    'SEARCH_PARAM': 'search',
+}
 
 
 # Database
@@ -123,8 +132,16 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
+# settings.py
 
-STATIC_URL = 'static/'
+# ...
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = '/mutwarekids_tv/static/assets/'
+
+# ...
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Default primary key field type
