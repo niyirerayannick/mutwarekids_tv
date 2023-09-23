@@ -1,0 +1,80 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="page-wrapper">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-header">
+					<div class="row align-items-center">
+						<div class="col-sm-6">
+							<div class="page-title">
+								All Users
+							</div>
+						</div>
+						<div class="col-sm-6 text-sm-right">
+							<div class=" mt-sm-0 mt-2">
+								<button class="btn btn-outline-primary mr-2">
+									<img "{% static 'assets/img/excel.png' %}"alt="">
+									<span class="ml-2">Excel</span>
+								</button>
+								<button class="btn btn-outline-danger mr-2">
+									<img "{% static 'assets/img/pdf.png' %}"alt="" height="18">
+									<span class="ml-2">PDF</span>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table class="table custom-table">
+							<thead class="thead-light">
+								<tr>									
+									<th>User ID</th>
+
+									<th>Full Name</th>
+									<th>Email</th>
+									<th>Mobile</th>
+									<th>Status</th>
+									<th>Role</th>
+
+									<th class="text-right">Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for user in users %}
+								<tr>
+									<td>{{ user.id }}</td>
+									<td>{{ user.full_name }}</td>
+									<td>{{ user.email }}</td>
+									<td>{{ user.telephone }}</td>
+									
+									<td class="text-right">
+										<a href="edit-student.html" class="btn btn-primary btn-sm mb-1">
+												<i class="far fa-edit">ACTIVE</i>
+										</a>
+									</td>
+									<td>Guardian</td>
+									<td class="text-right">
+										<a href="edit-student.html" class="btn btn-primary btn-sm mb-1">
+											<i class="far fa-edit"></i>
+										</a>
+										<button type="submit" data-toggle="modal" data-target="#delete_employee" class="btn btn-danger btn-sm mb-1">
+											<i class="far fa-trash-alt"></i>
+										</button>
+									</td>
+								</tr>
+								{% endfor %}
+								<!-- Repeat this structure for other student entries -->
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}

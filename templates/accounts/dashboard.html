@@ -1,0 +1,200 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="page-wrapper">
+	<div class="content container-fluid">
+	  <div class="page-header">
+		   <div class="row">
+			<div class="col-md-6">
+				<h3 class="page-title mb-0">Dashboard</h3>
+			</div>
+			<div class="col-md-6">
+				<ul class="breadcrumb mb-0 p-0 float-right">
+					<li class="breadcrumb-item"><a href="{% url 'dashboard' %}"><i class="fas fa-home"></i> Home</a></li>
+					<li class="breadcrumb-item"><span>Dashboard</span></li>
+				</ul>
+			</div>
+		    </div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+			<div class="dash-widget dash-widget5">
+				<span class="float-left"><img "{% static 'assets/img/dash/dash-1.png' %}" alt="" width="80"></span>
+				<div class="dash-widget-info text-right">
+					<span>Video</span>
+					<h3>{{ total_videos }}</h3>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+			<div class="dash-widget dash-widget5">
+				<div class="dash-widget-info text-left d-inline-block">
+					<span>Total Views</span>
+				<h3>{{ all_views}}</h3>
+				</div>
+				<span class="float-right"><img "{% static 'assets/img/dash/dash-2.png' %}" width="80" alt=""></span>
+			</div>
+		</div>
+		<div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+			<div class="dash-widget dash-widget5">
+				<span class="float-left"><img "{% static 'assets/img/dash/dash-3.png' %}" alt="" width="80"></span>
+				<div class="dash-widget-info text-right">
+					<span>Total Users</span>
+					<h3>{{ total_users }}</h3>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+			<div class="dash-widget dash-widget5">
+				<div class="dash-widget-info d-inline-block text-left">
+					<span>Total Earnings</span>
+					<h3>$0.00</h3>
+				</div>
+				<span class="float-right"><img "{% static 'assets/img/dash/dash-4.png' %}" alt="" width="80"></span>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-header">
+					<div class="row align-items-center">
+						<div class="col-sm-6">
+							<div class="page-title">
+								All Users
+							</div>
+						</div>
+						<div class="col-sm-6 text-sm-right">
+							<div class=" mt-sm-0 mt-2">
+								<button class="btn btn-outline-primary mr-2">
+									<img "{% static 'assets/img/excel.png' %}"alt="">
+									<span class="ml-2">Excel</span>
+								</button>
+								<button class="btn btn-outline-danger mr-2">
+									<img "{% static 'assets/img/pdf.png' %}"alt="" height="18">
+									<span class="ml-2">PDF</span>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table class="table custom-table">
+							<thead class="thead-light">
+								<tr>									
+									<th>User ID</th>
+
+									<th>Full Name</th>
+									<th>Email</th>
+									<th>Mobile</th>
+									<th>Status</th>
+									<th>Role</th>
+
+									<th class="text-right">Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for user in users %}
+								<tr>
+									<td>{{ user.id }}</td>
+									<td>{{ user.full_name }}</td>
+									<td>{{ user.email }}</td>
+									<td>{{ user.telephone }}</td>
+									
+									<td class="text-right">
+										<a href="edit-student.html" class="btn btn-primary btn-sm mb-1">
+												<i class="far fa-edit">ACTIVE</i>
+										</a>
+									</td>
+									<td>Guardian</td>
+									<td class="text-right">
+										<a href="edit-student.html" class="btn btn-primary btn-sm mb-1">
+											<i class="far fa-edit"></i>
+										</a>
+										<button type="submit" data-toggle="modal" data-target="#delete_employee" class="btn btn-danger btn-sm mb-1">
+											<i class="far fa-trash-alt"></i>
+										</button>
+									</td>
+								</tr>
+								{% endfor %}
+								<!-- Repeat this structure for other student entries -->
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-header">
+					<div class="row align-items-center">
+						<div class="col-sm-6">
+							<div class="page-title">
+								All Videos
+							</div>
+						</div>
+						<div class="col-sm-6 text-sm-right">
+							<div class=" mt-sm-0 mt-2">
+								<button class="btn btn-outline-primary mr-2">
+									<img "{% static 'assets/img/excel.png' %}"alt="">
+									<span class="ml-2">Excel</span>
+								</button>
+								<button class="btn btn-outline-danger mr-2">
+									<img "{% static 'assets/img/pdf.png' %}"alt="" height="18">
+									<span class="ml-2">PDF</span>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table class="table custom-table">
+							<thead class="thead-light">
+								<tr>									
+									<th>Video Id</th>
+									<th>Title</th>
+									<th>Total views</th>
+									<th>Upload_date</th>
+									<th>Video Category</th>
+									<th>Uploaded by</th>
+
+									<th class="text-right">Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for video  in videos %}
+								<tr>
+									<td>{{ video.id }}</td>
+									<td>{{ video.title }}</td>
+									<td>{{ video.view_count}}</td>
+									<td>{{ video.upload_date }}</td>
+									<td>{{ video.category}}</td>
+									<td>Admin</td>
+									<td class="text-right">
+										<a href="edit-student.html" class="btn btn-primary btn-sm mb-1">
+											<i class="far fa-edit"></i>
+										</a>
+										<button type="submit" data-toggle="modal" data-target="#delete_employee" class="btn btn-danger btn-sm mb-1">
+											<i class="far fa-trash-alt"></i>
+										</button>
+									</td>
+								</tr>
+								{% endfor %}
+								<!-- Repeat this structure for other student entries -->
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

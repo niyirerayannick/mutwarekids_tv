@@ -6,7 +6,11 @@ from .views import (
     ProfileUpdateView,
     ChangePasswordView, 
     PasswordResetRequestView, 
-    LogoutView,
+    LogoutView, 
+    dashboard, 
+    video_list, 
+    user_list,
+    add_user,
     )
 
 urlpatterns = [
@@ -17,4 +21,12 @@ urlpatterns = [
     path('change-password/', ChangePasswordView.as_view(), name='change-password'),
     path('password-reset/request/', PasswordResetRequestView.as_view(), name='password_reset_request'),
     path('logout/', LogoutView.as_view(), name='logout'),
+
+    path('dashboard/', dashboard, name='dashboard'),
+    path('dashboard/video_list', video_list, name='video_list'),
+    path('dashiboard/user_list/', user_list, name='user_list'),
+    path('dashboard/add_user/', add_user, name='add_user'),
+
+    
+
 ]

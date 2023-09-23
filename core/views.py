@@ -10,6 +10,12 @@ from .models import CustomUser, Profile
 from .serializers import UserRegistrationSerializer, UserLoginSerializer, ProfileSerializer, ProfileUpdateSerializer, ChangePasswordSerializer
 from rest_framework import generics
 from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render, redirect
+from kidtv.models import Video
+from django.db.models import Sum
+from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from .decorators import superuser_required 
 
 class UserRegistrationView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
@@ -112,3 +118,42 @@ class PasswordResetRequestView(APIView):
             view = PasswordResetView.as_view()
             return view(request)
         return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+@login_required  # Optional: You can also require the user to be logged in
+@superuser_required  # Apply the custom decorator
+def dashboard(request):
+    users = CustomUser.objects.all()
+    videos= Video.objects.all()
+    all_views=Video.objects.aggregate(Sum('view_count'))['view_count__sum'] or 0
+    total_users = CustomUser.objects.count()
+    total_videos = Video.objects.count()
+    context = {'users': users, 'total_users': total_users, 
+        "videos":videos, "total_videos":total_videos, "all_views":all_views}
+    return render(request, "accounts/dashboard.html", context)
+
+def video_list(request):
+    videos=Video.objects.all()
+    context={"videos":videos}
+    return render(request, "accounts/videos_list.html",context)
+
+def user_list(request):
+    users = CustomUser.objects.all()
+    context= {'users': users}
+    return render(request, 'accounts/all_users.html', context)
+
+def add_user(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+        full_name = request.POST.get('full_name', '')
+        telephone = request.POST.get('telephone', '')
+
+        # Create a new user instance using CustomUser model and manager
+        user = CustomUser.objects.create_user(email=email, password=password)
+        user.full_name = full_name
+        user.telephone = telephone
+        user.save()
+        
+        return redirect('user_list')  # Redirect to a page displaying the list of users
+
+    return render(request, 'accounts/add_user.html')
