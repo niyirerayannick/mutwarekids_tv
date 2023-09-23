@@ -1,0 +1,11 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="dashboard">
+        <h2>Welcome to the Custom Admin Dashboard</h2>
+        <p>Users: {{ user_count }}</p>
+        <p>Videos: {{ video_count }}</p>
+        <!-- Add more dashboard content as needed -->
+    </div>
+{% endblock %}
