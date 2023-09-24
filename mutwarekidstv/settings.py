@@ -138,7 +138,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATIC_ROOT = '/mutwarekids_tv/static/assets/'
+STATIC_ROOT = '/mutwarekids_tv/static/'
 
 # ...
 

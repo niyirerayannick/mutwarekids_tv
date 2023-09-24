@@ -6,7 +6,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from .models import Video
 from .serializers import VideoSerializer
-
+from django.contrib.auth.decorators import login_required
+from core.decorators import superuser_required 
 
 
 class VideoListView(generics.ListAPIView):
@@ -28,7 +29,8 @@ class VideoDetailView(generics.RetrieveAPIView):
             'video_details': serializer.data,
             'message': 'Video is now being watched.'
         }, status=status.HTTP_200_OK)
-
+@login_required  # Optional: You can also require the user to be logged in
+@superuser_required  # Apply the custom decorator
 def add_video(request):
     if request.method == 'POST':
         title = request.POST['title']

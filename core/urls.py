@@ -11,6 +11,9 @@ from .views import (
     video_list, 
     user_list,
     add_user,
+    delete_video,
+    edit_video,
+
     )
 
 urlpatterns = [
@@ -26,6 +29,8 @@ urlpatterns = [
     path('dashboard/video_list', video_list, name='video_list'),
     path('dashiboard/user_list/', user_list, name='user_list'),
     path('dashboard/add_user/', add_user, name='add_user'),
+    path('dashboard/video/<int:video_id>/edit/', edit_video, name='edit_video'),
+    path('dashboard/video/<int:video_id>/delete/', delete_video, name='delete_video'),
 
     
 

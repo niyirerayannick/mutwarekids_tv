@@ -8,14 +8,15 @@ from django.contrib.auth import authenticate, login,update_session_auth_hash
 from django.db.models import Q
 from .models import CustomUser, Profile
 from .serializers import UserRegistrationSerializer, UserLoginSerializer, ProfileSerializer, ProfileUpdateSerializer, ChangePasswordSerializer
-from rest_framework import generics
 from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from kidtv.models import Video
 from django.db.models import Sum
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from .decorators import superuser_required 
+
+
 
 class UserRegistrationView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
@@ -131,16 +132,22 @@ def dashboard(request):
         "videos":videos, "total_videos":total_videos, "all_views":all_views}
     return render(request, "accounts/dashboard.html", context)
 
+@login_required  # Optional: You can also require the user to be logged in
+@superuser_required  # Apply the custom decorator
 def video_list(request):
     videos=Video.objects.all()
     context={"videos":videos}
     return render(request, "accounts/videos_list.html",context)
 
+@login_required  # Optional: You can also require the user to be logged in
+@superuser_required  # Apply the custom decorator
 def user_list(request):
     users = CustomUser.objects.all()
     context= {'users': users}
     return render(request, 'accounts/all_users.html', context)
 
+@login_required  # Optional: You can also require the user to be logged in
+@superuser_required  # Apply the custom decorator
 def add_user(request):
     if request.method == 'POST':
         email = request.POST['email']
@@ -157,3 +164,28 @@ def add_user(request):
         return redirect('user_list')  # Redirect to a page displaying the list of users
 
     return render(request, 'accounts/add_user.html')
+
+# Edit Video View
+def edit_video(request, video_id):
+    video = get_object_or_404(Video, id=video_id)
+
+    if request.method == 'POST':
+        # Handle the form submission and update the video object
+        video.title = request.POST.get('title')
+        video.description = request.POST.get('description')
+        video.save()
+        return redirect('video_list')
+
+    return render(request, 'accounts/edit_video.html', {'video': video})
+
+# Delete Video View
+def delete_video(request, video_id):
+    video = get_object_or_404(Video, id=video_id)
+
+    if request.method == 'POST':
+        # Handle the video deletion
+        video.delete()
+        return redirect('video_list')
+
+    return render(request, 'accounts/delete_video.html', {'video': video})
+
