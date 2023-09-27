@@ -24,9 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-btnb8uuq$z(y68c6uh7_rw5bmv!+i(*$3@1kkcr%2t+n+4!t2w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['backend.mutwarekidtv.xyz','127.0.0.1']
+
 
 
 # Application definition
