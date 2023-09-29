@@ -19,7 +19,7 @@
     <!-- Header -->
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding: 10px;">
-          <a class="navbar-brand" href="index.html">
+          <a class="navbar-brand" href="{% url 'home' %}">
               <img src="{% static 'frontend/img/logo.png'%}" style="height: 50px;">
           </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,9 +30,9 @@
             <input class="form-control mr-sm-2" type="search" placeholder="Search ...." aria-label="Search" style="width: 50%; background-color: #fef2f2;">
             <span style="margin: 0 40px;"></span>
             <form class="form-inline my-2 my-lg-0">
-              <a href="register.html" class="btn register-button my-2 my-sm-0" type="submit">Register</a>
+              <a href="{% url 'register' %}" class="btn register-button my-2 my-sm-0" type="submit">Register</a>
               <span style="margin: 0 20px;"></span>
-              <a href="login.html" class="btn login-button my-2 my-sm-0" type="submit";>Sign In</a>
+              <a href="{% url 'login' %}" class="btn login-button my-2 my-sm-0" type="submit";>Sign In</a>
             </form>
           </div>
         </nav>

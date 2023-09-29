@@ -194,3 +194,9 @@ def delete_video(request, video_id):
 
     return render(request, 'accounts/delete_video.html', {'video': video})
 
+
+def login(request):
+    return render(request, 'interface/pages/login.html')
+
+def register(request):
+    return render(request, 'interface/pages/register.html')
