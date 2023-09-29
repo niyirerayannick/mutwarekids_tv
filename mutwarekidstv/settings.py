@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-btnb8uuq$z(y68c6uh7_rw5bmv!+i(*$3@1kkcr%2t+n+4!t2w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['backend.mutwarekidtv.xyz','127.0.0.1']
 
@@ -178,3 +178,8 @@ SWAGGER_SETTINGS = {
     'is_authenticated': False,
     'DOC_EXPANSION': 'none',
 }
+
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8080",  # Adjust this to match your Vue.js development server address
+]

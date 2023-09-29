@@ -8,7 +8,7 @@ from .models import Video
 from .serializers import VideoSerializer
 from django.contrib.auth.decorators import login_required
 from core.decorators import superuser_required 
-
+from . import views
 
 class VideoListView(generics.ListAPIView):
     queryset = Video.objects.all()
@@ -48,3 +48,7 @@ def add_video(request):
     return render(request, 'accounts/add_video.html')
 
 
+def home(request):
+    videos= Video.objects.all()
+    context= { "videos":videos }
+    return render(request, 'interface/pages/home.html',{ "videos":videos })

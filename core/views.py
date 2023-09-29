@@ -15,6 +15,7 @@ from django.db.models import Sum
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from .decorators import superuser_required 
+from rest_framework import status
 
 
 
@@ -24,10 +25,14 @@ class UserRegistrationView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
     def perform_create(self, serializer):
-        user = serializer.save()
-        if user:
+        try:
+            user = serializer.save()
             token, created = Token.objects.get_or_create(user=user)
-            return Response({'token': token.key}, status=status.HTTP_201_CREATED)
+            response_data = {'status': True, 'token': token.key}
+            return Response(response_data, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            response_data = {'status': False, 'error': str(e)}
+            return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserLoginView(APIView):

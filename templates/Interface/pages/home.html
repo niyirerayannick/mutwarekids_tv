@@ -1,0 +1,226 @@
+{% extends "interface/base.html" %}
+{% load static %}
+{% block content %}
+
+<section class="home-content">  
+    <div class="container mt-4">
+        <img src="{% static 'frontend/img/mutware_banner.png'%}" style="margin-left: 10%; margin-top: -5%; width: 70%">
+        <br><br>
+      <h1 class="text-center"><b>LEARN</b> <span style="font-family: century-gothic;">Through</span> <b>PLAY</b></h1><br>
+      <h4><b>Learning</b> is fun with engaging content!</h4>
+       
+        <div id="carouselExampleControls" class="carousel">
+          <div class="carousel-inner home-card-slide">
+            {% for video  in videos %}
+            <div class="carousel-item active">
+                <div class="card">
+                    <div class="card-body">
+                        <img href="{{ video.banner }}" class="d-block w-100" alt="....">
+                        <a href="{% url 'video-watching' video.id %}" class="play-icon">
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      
+    </div>
+</section>
+
+<div class="navbar navbar-green">
+  <a class="navbar-brand" href="episodes.html">
+    <h4>Lessons</h4>
+  </a>
+  <a class="navbar-brand" href="episodes.html">
+    <h5>View All <i class="fa fa-chevron-down"></i></h5>
+  </a>
+</div>
+<section class="lessons">
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="items">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <img src="{% static 'img/numberskid.png'%}" class="d-block w-100" alt="...">
+                                    <a href="restrict.html" class="play-icon">
+                                        <i class="fas fa-play"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="card-title"><b>Numbers</b></h5>
+                            <p>The show is centered on a group of puppies led by an adult mentor named</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="items">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <img src="{% static 'img/muhouse-01.png'%}" class="d-block w-100" alt="...">
+                                    <a href="restrict.html" class="play-icon">
+                                        <i class="fas fa-play"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="card-title">My Home</h5>
+                           <p>The show is centered on a group of puppies led by an adult mentor named.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="items">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <img src="{% static 'img/alphabestkids-01.png'%}" class="d-block w-100" alt="...">
+                                <a href="restrict.html" class="play-icon">
+                                    <i class="fas fa-play"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h5 class="card-title">Alphabets</h5>
+                       <p>The show is centered on a group of puppies led by an adult mentor named.</p>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="items">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <img src="{% static 'img/puzzle-01.jpg'%}" class="d-block w-100" alt="...">
+                                    <a href="restrict.html" class="play-icon">
+                                        <i class="fas fa-play"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="card-title">M Family</h5>
+                           <p>The show is centered on a group of puppies led by an adult mentor named.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="navbar navbar-green">
+  <a class="navbar-brand" href="#">
+    <h4>Explore More here</h4>
+  </a>
+</div>
+<section class="more-video">
+    <div class="container mt-4">
+        <div id="carouselExampleControls" class="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="card-explore">
+                    <div class="card-body">
+                        <img src="{% static 'img/puzzle-01.jpg'%}" class="d-block w-100 h-vh" alt="...">
+                        <a href="restrict.html" class="play-icon">
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="{% static 'img/alphabestkids-01.png'%}" class="d-block w-100 h-vh" alt="...">
+                        <a href="restrict.html" class="play-icon">
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="{% static 'img/numberskid.png'%}" class="d-block w-100 h-vh" alt="...">
+                        <a href="restrict.html" class="play-icon">
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="img/puzzle-01.jpg" class="d-block w-100 h-vh" alt="...">
+                        <a href="restrict.html" class="play-icon">
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="img/alphabestkids-01.png" class="d-block w-100 h-vh" alt="...">
+                        <a href="#" class="play-icon">
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="img/numberskid.png" class="d-block w-100 h-vh" alt="...">
+                        <a href="#" class="play-icon">
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="img/numberskid.png" class="d-block w-100 h-vh" alt="...">
+                        <a href="#" class="play-icon">
+                            <i class="fas fa-play"></i> 
+                        </a>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+    </div>
+</section>
+{% endblock %}
