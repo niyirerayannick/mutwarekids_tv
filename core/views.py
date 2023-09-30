@@ -4,6 +4,8 @@ from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.views import PasswordResetView
+from django.shortcuts import redirect, render
+from django.contrib import messages
 from django.contrib.auth import authenticate, login,update_session_auth_hash
 from django.db.models import Q
 from .models import CustomUser, Profile
@@ -16,8 +18,11 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from .decorators import superuser_required 
 from rest_framework import status
-
-
+from django.contrib.auth import authenticate, login
+from django.db.models import Q
+from django.shortcuts import render, redirect
+from rest_framework import status
+from rest_framework.decorators import api_view, permission_classes
 
 class UserRegistrationView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
@@ -170,6 +175,40 @@ def add_user(request):
 
     return render(request, 'accounts/add_user.html')
 
+def add_edit_user(request, user_id=None):
+    if user_id is None:
+        # Create a new user
+        if request.method == 'POST':
+            email = request.POST['email']
+            password = request.POST['password']
+            full_name = request.POST.get('full_name', '')
+            telephone = request.POST.get('telephone', '')
+
+            user = CustomUser.objects.create_user(email=email, password=password)
+            user.full_name = full_name
+            user.telephone = telephone
+            user.save()
+            
+            return redirect('user_list')
+    else:
+        # Edit an existing user
+        user = get_object_or_404(CustomUser, id=user_id)
+
+        if request.method == 'POST':
+            email = request.POST['email']
+            full_name = request.POST.get('full_name', '')
+            telephone = request.POST.get('telephone', '')
+
+            # Update user details
+            user.email = email
+            user.full_name = full_name
+            user.telephone = telephone
+            user.save()
+
+            return redirect('user_list')
+
+    return render(request, 'accounts/edit_user.html', {'user': user})
+
 # Edit Video View
 def edit_video(request, video_id):
     video = get_object_or_404(Video, id=video_id)
@@ -195,8 +234,32 @@ def delete_video(request, video_id):
     return render(request, 'accounts/delete_video.html', {'video': video})
 
 
-def login(request):
-    return render(request, 'interface/pages/login.html')
+
+
 
 def register(request):
     return render(request, 'interface/pages/register.html')
+
+
+def adminlogin(request):
+    if request.method == 'POST':
+        email_or_telephone = request.POST.get('email_or_telephone')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=email_or_telephone, password=password)
+
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                token, created = Token.objects.get_or_create(user=user)
+                
+                if user.is_superuser:
+                    return redirect('dashboard')
+                else:
+                    return redirect('video-list')
+            else:
+                messages.error(request, "Your account is not active. Please contact the administrator.")
+        else:
+            messages.error(request, "username or password are incorrect. Please try again.")
+
+    return render(request, 'accounts/login.html')
