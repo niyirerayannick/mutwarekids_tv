@@ -69,7 +69,6 @@ class LogoutView(APIView):
         request.auth.delete()  # Delete the authentication token
         return Response({'detail': 'Logout successful'}, status=status.HTTP_200_OK)
         
-
 class ProfileView(generics.RetrieveAPIView):
     serializer_class = ProfileSerializer
 
@@ -147,6 +146,7 @@ def dashboard(request):
 def video_list(request):
     videos=Video.objects.all()
     context={"videos":videos}
+    
     return render(request, "accounts/videos_list.html",context)
 
 @login_required  # Optional: You can also require the user to be logged in
@@ -169,47 +169,18 @@ def add_user(request):
         user = CustomUser.objects.create_user(email=email, password=password)
         user.full_name = full_name
         user.telephone = telephone
+        if user.is_superuser:
+            user.role = 'admin'
+        else:
+            user.role = 'Guardian'
+
         user.save()
-        
         return redirect('user_list')  # Redirect to a page displaying the list of users
 
     return render(request, 'accounts/add_user.html')
 
-def add_edit_user(request, user_id=None):
-    if user_id is None:
-        # Create a new user
-        if request.method == 'POST':
-            email = request.POST['email']
-            password = request.POST['password']
-            full_name = request.POST.get('full_name', '')
-            telephone = request.POST.get('telephone', '')
-
-            user = CustomUser.objects.create_user(email=email, password=password)
-            user.full_name = full_name
-            user.telephone = telephone
-            user.save()
-            
-            return redirect('user_list')
-    else:
-        # Edit an existing user
-        user = get_object_or_404(CustomUser, id=user_id)
-
-        if request.method == 'POST':
-            email = request.POST['email']
-            full_name = request.POST.get('full_name', '')
-            telephone = request.POST.get('telephone', '')
-
-            # Update user details
-            user.email = email
-            user.full_name = full_name
-            user.telephone = telephone
-            user.save()
-
-            return redirect('user_list')
-
-    return render(request, 'accounts/edit_user.html', {'user': user})
-
-# Edit Video View
+@login_required  # Optional: You can also require the user to be logged in
+@superuser_required  # Apply the custom decorator
 def edit_video(request, video_id):
     video = get_object_or_404(Video, id=video_id)
 
@@ -223,6 +194,8 @@ def edit_video(request, video_id):
     return render(request, 'accounts/edit_video.html', {'video': video})
 
 # Delete Video View
+@login_required  # Optional: You can also require the user to be logged in
+@superuser_required  # Apply the custom decorator
 def delete_video(request, video_id):
     video = get_object_or_404(Video, id=video_id)
 
@@ -232,7 +205,6 @@ def delete_video(request, video_id):
         return redirect('video_list')
 
     return render(request, 'accounts/delete_video.html', {'video': video})
-
 
 
 
@@ -263,3 +235,34 @@ def adminlogin(request):
             messages.error(request, "username or password are incorrect. Please try again.")
 
     return render(request, 'accounts/login.html')
+
+
+
+def delete_user(request, user_id):
+    user = get_object_or_404(CustomUser, id=user_id)
+    
+    if request.method == 'POST':
+        # Delete the user
+        user.delete()
+        return redirect('user_list')  # Redirect to a page displaying the list of users
+    
+    return render(request, 'accounts/delete_user.html', {'user': user})
+
+
+def edit_user(request, user_id):
+    user = get_object_or_404(CustomUser, id=user_id)
+
+    if request.method == 'POST':
+        email = request.POST['email']
+        full_name = request.POST.get('full_name', '')
+        telephone = request.POST.get('telephone', '')
+        # Update user details
+        user.email = email
+        user.full_name = full_name
+        user.telephone = telephone
+        user.save()
+
+
+        return redirect('user_list')
+
+    return render(request, 'accounts/edit_user.html', {'user': user})

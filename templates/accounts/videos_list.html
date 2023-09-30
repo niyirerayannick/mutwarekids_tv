@@ -17,12 +17,7 @@
 						<div class="col-sm-6 text-sm-right">
 							<div class=" mt-sm-0 mt-2">
 								<button class="btn btn-outline-primary mr-2">
-									<img "{% static '/img/excel.png' %}"alt="">
-									<span class="ml-2">Excel</span>
-								</button>
-								<button class="btn btn-outline-danger mr-2">
-									<img "{% static '/img/pdf.png' %}"alt="" height="18">
-									<span class="ml-2">PDF</span>
+									<a href="{% url 'video-create' %}"><span>Add Video</span></a>
 								</button>
 							</div>
 						</div>
@@ -56,7 +51,7 @@
 										<a href="{% url 'edit_video' video.id %}" class="btn btn-primary btn-sm mb-1">
 											<i class="far fa-edit"></i>
 										</a>
-										<a href="{% url 'delete_video' video.id %}"> 
+										<a href="{% url 'edit_user' user.id %}"> 
 										  <button type="submit" data-toggle="modal" data-target="#delete_employee" class="btn btn-danger btn-sm mb-1">
 											<i class="far fa-trash-alt"></i>
 										   </button>

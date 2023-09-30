@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Video</title>
+</head>
+<body>
+    <h2>Edit Video</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" value="{{ user.email }}" required><br>
+    
+        <label for="full_name">Full Name:</label>
+        <input type="text" id="full_name" name="full_name" value="{{ user.full_name }}"><br>
+    
+        <label for="telephone">Telephone:</label>
+        <input type="text" id="telephone" name="telephone" value="{{ user.telephone }}"><br>
+    
+        <button type="submit">Save Changes</button>
+    </form>
+</body>
+</html>

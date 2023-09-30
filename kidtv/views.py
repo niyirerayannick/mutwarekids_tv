@@ -52,3 +52,5 @@ def home(request):
     videos= Video.objects.all()
     context= { "videos":videos }
     return render(request, 'interface/pages/home.html',{ "videos":videos })
+
+
