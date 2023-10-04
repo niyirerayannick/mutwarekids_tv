@@ -6,6 +6,14 @@ class Video(models.Model):
     CATEGORY_CHOICES = [
         ('animation', 'Animation'),
         ('podcast', 'Podcast'),
+        ('number', 'Number'),
+        ('myfamiy', 'Myfamily'),
+        ('alphabetic', 'Alphabetic'),
+        ('myhome', 'Myhome'),
+
+
+
+        
     ]
     title = models.CharField(max_length=255)
     description = models.TextField()

@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-btnb8uuq$z(y68c6uh7_rw5bmv!+i(*$3@1kkcr%2t+n+4!t2w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['backend.mutwarekidtv.xyz','127.0.0.1']
+ALLOWED_HOSTS = ['backend.mutwarekidtv.xyz','127.0.0.1', '*']
 
 
 
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'kidtv',
     'drf_yasg',
     'django_filters',
+     'corsheaders',
 
 
 ]
@@ -58,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'mutwarekidstv.urls'

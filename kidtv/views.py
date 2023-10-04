@@ -9,6 +9,7 @@ from .serializers import VideoSerializer
 from django.contrib.auth.decorators import login_required
 from core.decorators import superuser_required 
 from . import views
+from rest_framework.views import APIView
 
 class VideoListView(generics.ListAPIView):
     queryset = Video.objects.all()
@@ -29,6 +30,17 @@ class VideoDetailView(generics.RetrieveAPIView):
             'video_details': serializer.data,
             'message': 'Video is now being watched.'
         }, status=status.HTTP_200_OK)
+
+class RelatedVideosByCategory(APIView):
+    def get(self, request, category):
+        try:
+            # Retrieve related videos by category
+            related_videos = Video.objects.filter(category=category)[:5]  # Adjust the number of videos as needed
+            serializer = VideoSerializer(related_videos, many=True)
+            return Response(serializer.data)
+        except Exception as e:
+            return Response({'error': str(e)}, status=500)
+
 @login_required  # Optional: You can also require the user to be logged in
 @superuser_required  # Apply the custom decorator
 def add_video(request):

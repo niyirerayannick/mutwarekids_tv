@@ -33,7 +33,7 @@ class UserRegistrationView(generics.CreateAPIView):
         try:
             user = serializer.save()
             token, created = Token.objects.get_or_create(user=user)
-            response_data = {'status': True, 'token': token.key}
+            response_data =   {'status': True, 'token': token.key}
             return Response(response_data, status=status.HTTP_201_CREATED)
         except Exception as e:
             response_data = {'status': False, 'error': str(e)}
@@ -59,7 +59,7 @@ class UserLoginView(APIView):
                 token, created = Token.objects.get_or_create(user=user)
                 return Response({'token': token.key}, status=status.HTTP_200_OK)
 
-        return Response({'detail': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'detail': 'check email and password'}, status=status.HTTP_400_BAD_REQUEST)
 
 class LogoutView(APIView):
     permission_classes = [permissions.IsAuthenticated]

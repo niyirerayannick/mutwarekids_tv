@@ -19,6 +19,7 @@ from .views import (
     )
 
 urlpatterns = [
+
     path('register/', UserRegistrationView.as_view(), name='user-registration'),
     path('login/', UserLoginView.as_view(), name='user-login'),
     path('profile/', ProfileView.as_view(), name='profile'),
