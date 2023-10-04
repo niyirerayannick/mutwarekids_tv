@@ -9,6 +9,7 @@ from .serializers import VideoSerializer
 from django.contrib.auth.decorators import login_required
 from core.decorators import superuser_required 
 from . import views
+from rest_framework.generics import RetrieveAPIView
 from rest_framework.views import APIView
 
 class VideoListView(generics.ListAPIView):
@@ -17,7 +18,7 @@ class VideoListView(generics.ListAPIView):
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'description', 'category']
 
-class VideoDetailView(generics.RetrieveAPIView):
+class VideoDetailView(RetrieveAPIView):
     queryset = Video.objects.all()
     serializer_class = VideoSerializer
     
@@ -25,11 +26,21 @@ class VideoDetailView(generics.RetrieveAPIView):
         instance = self.get_object()
         instance.increment_view_count()  # Custom method to increment video views
         instance.save()  # Save the updated instance
+
+        # Get related videos based on the category of the current video
+        related_videos = Video.objects.filter(category=instance.category).exclude(id=instance.id)[:5]
+
         serializer = self.get_serializer(instance)
-        return Response({
+        related_serializer = VideoSerializer(related_videos, many=True)
+
+        response_data = {
             'video_details': serializer.data,
+            'related_videos': related_serializer.data,
             'message': 'Video is now being watched.'
-        }, status=status.HTTP_200_OK)
+        }
+
+        return Response(response_data, status=status.HTTP_200_OK)
+
 
 class RelatedVideosByCategory(APIView):
     def get(self, request, category):

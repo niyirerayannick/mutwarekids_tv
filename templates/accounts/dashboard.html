@@ -107,12 +107,14 @@
 									</td>
 									<td>Guardian</td>
 									<td class="text-right">
-										<a href="edit-student.html" class="btn btn-primary btn-sm mb-1">
+										<a href="{% url 'edit_user' user.id %}" class="btn btn-primary btn-sm mb-1">
 											<i class="far fa-edit"></i>
 										</a>
-										<button type="submit" data-toggle="modal" data-target="#delete_employee" class="btn btn-danger btn-sm mb-1">
-											<i class="far fa-trash-alt"></i>
-										</button>
+										<a href="{% url 'delete_user' user.id %}"> 
+											<button type="submit" data-toggle="modal" data-target="#delete_employee" class="btn btn-danger btn-sm mb-1">
+											  <i class="far fa-trash-alt"></i>
+											 </button>
+										  </a>
 									</td>
 								</tr>
 								{% endfor %}
@@ -169,12 +171,14 @@
 									<td>{{ video.category}}</td>
 									<td>Admin</td>
 									<td class="text-right">
-										<a href="edit-student.html" class="btn btn-primary btn-sm mb-1">
+										<a href="{% url 'edit_video' video.id %}" class="btn btn-primary btn-sm mb-1">
 											<i class="far fa-edit"></i>
 										</a>
-										<button type="submit" data-toggle="modal" data-target="#delete_employee" class="btn btn-danger btn-sm mb-1">
+										<a href="{% url 'edit_user' user.id %}"> 
+										  <button type="submit" data-toggle="modal" data-target="#delete_employee" class="btn btn-danger btn-sm mb-1">
 											<i class="far fa-trash-alt"></i>
-										</button>
+										   </button>
+									    </a>
 									</td>
 								</tr>
 								{% endfor %}

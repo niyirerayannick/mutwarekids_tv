@@ -21,7 +21,6 @@ from rest_framework import status
 from django.contrib.auth import authenticate, login
 from django.db.models import Q
 from django.shortcuts import render, redirect
-from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 
 class UserRegistrationView(generics.CreateAPIView):
@@ -59,7 +58,7 @@ class UserLoginView(APIView):
                 token, created = Token.objects.get_or_create(user=user)
                 return Response({'token': token.key}, status=status.HTTP_200_OK)
 
-        return Response({'detail': 'check email and password'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'detail': 'incorrect email/telephone or password'}, status=status.HTTP_400_BAD_REQUEST)
 
 class LogoutView(APIView):
     permission_classes = [permissions.IsAuthenticated]
