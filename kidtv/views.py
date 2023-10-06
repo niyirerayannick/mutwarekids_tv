@@ -47,7 +47,10 @@ class RelatedVideosByCategory(APIView):
         try:
             # Retrieve related videos by category
             related_videos = Video.objects.filter(category=category)[:5]  # Adjust the number of videos as needed
-            serializer = VideoSerializer(related_videos, many=True)
+            serializer = VideoSerializer(related_videos, many=True, context={'request': request})
+
+            serialized_data = serializer.data
+
             return Response(serializer.data)
         except Exception as e:
             return Response({'error': str(e)}, status=500)
@@ -71,9 +74,6 @@ def add_video(request):
     return render(request, 'accounts/add_video.html')
 
 
-def home(request):
-    videos= Video.objects.all()
-    context= { "videos":videos }
-    return render(request, 'interface/pages/home.html',{ "videos":videos })
+
 
 

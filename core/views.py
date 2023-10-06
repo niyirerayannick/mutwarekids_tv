@@ -207,11 +207,6 @@ def delete_video(request, video_id):
 
 
 
-
-def register(request):
-    return render(request, 'interface/pages/register.html')
-
-
 def adminlogin(request):
     if request.method == 'POST':
         email_or_telephone = request.POST.get('email_or_telephone')
