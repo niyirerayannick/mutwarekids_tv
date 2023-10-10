@@ -187,6 +187,9 @@ def edit_video(request, video_id):
         # Handle the form submission and update the video object
         video.title = request.POST.get('title')
         video.description = request.POST.get('description')
+        video.video_file = request.FILES.get('video_file')
+        video.category = request.POST.get('category')
+        video.banner = request.FILES.get('banner')
         video.save()
         return redirect('video_list')
 

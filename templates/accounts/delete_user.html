@@ -1,14 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Remove User</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="page-wrapper">
     <h2>Remove User</h2>
     <p>Are you sure you want to remove {{ user.full_name }}?</p>
     <form method="post">
         {% csrf_token %}
         <button type="submit">Confirm Removal</button>
     </form>
-</body>
-</html>
+</div>
+{% endblock %}
+
+
+
+
+
+
+

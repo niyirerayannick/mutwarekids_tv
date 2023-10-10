@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-btnb8uuq$z(y68c6uh7_rw5bmv!+i(*$3@1kkcr%2t+n+4!t2w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['backend.mutwarekidtv.xyz','127.0.0.1', '*']
+ALLOWED_HOSTS = ['*']
 
 
 
@@ -181,7 +181,8 @@ SWAGGER_SETTINGS = {
     'DOC_EXPANSION': 'none',
 }
 
-CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8080",  # Adjust this to match your Vue.js development server address
+    "http://localhost:8080",
+    "https://mutwarekidtv.xyz",  # Adjust this to match your Vue.js development server address
 ]
