@@ -56,10 +56,24 @@ class UserLoginView(APIView):
             if user is not None and user.check_password(password):
                 login(request, user)
                 token, created = Token.objects.get_or_create(user=user)
-                return Response({'token': token.key}, status=status.HTTP_200_OK)
+
+                # Additional user information
+                user_info = {
+                    'names': user.full_name,
+                    'phone': user.telephone,
+                    'email': user.email,
+                }
+
+                response_data = {
+                    'token': token.key,
+                    'user_info': user_info,
+                }
+
+                return Response(response_data, status=status.HTTP_200_OK)
 
         return Response({'detail': 'incorrect email/telephone or password'}, status=status.HTTP_400_BAD_REQUEST)
 
+  
 class LogoutView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
